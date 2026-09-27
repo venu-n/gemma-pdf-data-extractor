@@ -1,0 +1,7 @@
+pymupdf
+pillow
+opencv-python-headless
+requests
+pydantic
+pydantic-settings
+pytest
