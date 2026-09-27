@@ -18,14 +18,28 @@ def process_check(image, pdf_file: str, pdf_page_number: int) -> CheckRecord:
     record = _build_record(vision_result, pdf_file, pdf_page_number)
     validation = validate_check_record(record)
     if validation.valid:
-        return replace(record, status='Extracted', notes=_confidence_notes(record))
+        return replace(record, status='Extracted', notes="")
+    
     return replace(
     record,
     status="Manual Review",
     notes=_combine_notes(
         "; ".join(validation.issues),
-        _confidence_notes(record),
     ),
+
+    # *****If confidence level need to be printed, use the below.****
+    # if validation.valid:
+    #     return replace(record, status='Extracted', notes=_confidence_notes(record))
+    
+    # return replace(
+    # record,
+    # status="Manual Review",
+    # notes=_combine_notes(
+    #     "; ".join(validation.issues),
+    #     _confidence_notes(record),
+    # ),
+
+
 )
 
 def process_pdf(pdf_path: Path) -> list[CheckRecord]:
